@@ -1,0 +1,17 @@
+<div id="header">
+  <a class="home_button" href="/">Home</a>
+  <% if user? %>
+    <form class="big_white_buttons" action="/logout" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" name="logout" value="Logout">
+    </form>
+  <% else %>
+    <a href="/users/new" id="newaccount">Create A New Account</a>
+    <form class="big_white_buttons" action="/users/login" method="post">
+      <input type="email" name="email" placeholder="email">
+      <input type="password" name="password" placeholder="password">
+      <input type="submit" name="login" value="Login">
+      <p> <%= @invalid_login %> </p>
+    </form>
+  <% end %>
+</div>

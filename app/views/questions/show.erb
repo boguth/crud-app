@@ -1,0 +1,173 @@
+<div class="container">
+  <div class = "question-content">
+    <div class="votebox">
+      <%= erb :_vote, locals: { vote_type: 'upvote', route: "/questions/#{@question.id}", question: @question}  %>
+      <div class="score"><%= @question.score %></div>
+      <%= erb :_vote, locals: { vote_type: 'downvote', route: "/questions/#{@question.id}", question: @question}  %>
+    </div>
+    <h1><%= @question.title %></h1>
+    <h2><%= @question.author.username %></h2>
+    <p class = "content"> <%= @question.content %> </p>
+      <% if owner?(@question.author_id) %>
+        <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/edit">
+          <input type="submit" name="edit" value="Edit Question">
+        </form>
+        <form class="big_white_buttons" name="question_delete" action="/questions/<%=@question.id %>" method="POST">
+          <input name="_method" type="hidden" value="delete" />
+          <input type="submit" name="delete" value="Delete Post">
+        </form>
+      <% end %>
+      <% if @question.comments.length > 0 %>
+        <div class = "commentsbox">
+          <h3>Comments:</h3>
+          <ul>
+            <% @question.comments.each do |comment| %>
+              <li>
+                <div class="votebox">
+                  <%= erb :_vote, locals: { vote_type: 'upvote', route: "/questioncomments/#{comment.id}", question: comment}  %>
+                  <div class="score"><%= comment.score %></div>
+                  <%= erb :_vote, locals: { vote_type: 'downvote', route: "/questioncomments/#{comment.id}", question: comment}  %>
+                </div>
+                <div class="comment-content"><%= comment.content %> -- <%= comment.author.username %></div>
+                <% if owner?(comment.author_id) %>
+                  <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/comments/<%=comment.id%>/edit">
+                    <input type="submit" value="Edit Comment">
+                  </form>
+                  <form class="big_white_buttons" name="comment_delete" action="/questions/<%=@question.id %>/comments/<%=comment.id %>" method="POST">
+                    <input name="_method" type="hidden" value="delete" />
+                    <input type="submit" name="delete" value="Delete Comment">
+                  </form>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+  </div>
+    <% if user? %>
+      <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/comments/new">
+        <input type="submit" value="New Comment">
+      </form>
+    <% end %>
+  <div class = "horiz-line"></div>
+    <ul>
+      <% if @best_answer %>
+        <div class = "best-answer answer-box">
+          <h3>Answer:</h3>
+          <li>
+            <div class="votebox">
+              <%= erb :_vote, locals: { vote_type: 'upvote', route: "/answers/#{@best_answer.id}", question: @best_answer}  %>
+              <div class="score"><%= @best_answer.score %></div>
+              <%= erb :_vote, locals: { vote_type: 'downvote', route: "/answers/#{@best_answer.id}", question: @best_answer}  %>
+            </div>
+            <div class="answer_content"><%= @best_answer.content %><br>
+            --<%= @best_answer.author.username %></div>
+            <% if owner?(@best_answer.author_id) %>
+              <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/answers/<%=@best_answer.id%>/edit">
+                <input type="submit" name="edit" value="Edit Answer">
+              </form>
+              <form class="big_white_buttons" name="answer_delete" action="/questions/<%=@question.id %>/answers/<%=@best_answer.id %>" method="POST">
+                <input name="_method" type="hidden" value="delete" />
+                <input type="submit" name="delete" value="Delete Answer">
+              </form>
+            <% end %>
+          </li>
+          <% if @best_answer.comments.length > 0 %>
+            <div class = "commentsbox">
+              <h4>Comments:</h4>
+              <ul>
+                <% @best_answer.comments.each do |comment| %>
+                  <li>
+                    <div class="votebox">
+                      <%= erb :_vote, locals: { vote_type: 'upvote', route: "/answercomments/#{comment.id}", question: comment}  %>
+                      <div class="score"><%= comment.score %></div>
+                      <%= erb :_vote, locals: { vote_type: 'downvote', route: "/answercomments/#{comment.id}", question: comment}  %>
+                    </div>
+                    <div class="comment-content"><%= comment.content %> -- <%= comment.author.username %></div>
+                    <% if owner?(comment.author_id) %>
+                      <form class="big_white_buttons" method="get" action="/answers/<%=@best_answer.id%>/comments/<%=comment.id%>/edit">
+                        <input type="submit" name="edit" value="Edit Comment" >
+                      </form>
+                      <form class="big_white_buttons" name="comment_delete" action="/answers/<%=@best_answer.id %>/comments/<%=comment.id %>" method="POST">
+                        <input name="_method" type="hidden" value="delete" />
+                        <input type="submit" name="delete" value="Delete Comment">
+                      </form>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <% if user? %>
+            <form class="big_white_buttons" method="get" action="/answers/<%=@best_answer.id%>/comments/new">
+              <input type="submit" name="edit" value="New Comment" >
+            </form>
+          <% end %>
+        </div>
+      <% end %>
+      <% @answers.each do |answer| %>
+        <div class = "answer-box">
+          <h3>Answer:</h3>
+          <li>
+            <div class="votebox">
+              <%= erb :_vote, locals: { vote_type: 'upvote', route: "/answers/#{answer.id}", question: answer}  %>
+              <div class="score"><%= answer.score %></div>
+              <%= erb :_vote, locals: { vote_type: 'downvote', route: "/answers/#{answer.id}", question: answer}  %>
+            </div>
+            <div class="answer_content"><%= answer.content %><br>
+            --<%= answer.author.username %></div>
+            <% if owner?(answer.author_id) %>
+              <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/answers/<%=answer.id%>/edit">
+                <input type="submit" name="edit" value="Edit Answer" >
+              </form>
+              <form class="big_white_buttons" name="answer_delete" action="/questions/<%=@question.id %>/answers/<%=answer.id %>" method="POST">
+                <input name="_method" type="hidden" value="delete">
+                <input type="submit" name="delete" value="Delete Answer">
+              </form>
+            <% end %>
+          </li>
+          <% if answer.comments.length > 0 %>
+            <div class = "commentsbox">
+              <h4>Comments:</h4>
+              <ul>
+                <% answer.comments.each do |comment| %>
+                  <li>
+                    <div class="votebox">
+                      <%= erb :_vote, locals: { vote_type: 'upvote', route: "/answercomments/#{comment.id}", question: comment}  %>
+                      <div class="score"><%= comment.score %></div>
+                      <%= erb :_vote, locals: { vote_type: 'downvote', route: "/answercomments/#{comment.id}", question: comment}  %>
+                    </div>
+                    <div class="comment-content"><%= comment.content %> -- <%= comment.author.username %></div>
+                    <% if owner?(comment.author_id) %>
+                      <form class="big_white_buttons" method="get" action="/answers/<%=answer.id%>/comments/<%=comment.id%>/edit">
+                        <input type="submit" name="edit" value="Edit Comment" >
+                      </form>
+                      <form class="big_white_buttons" name="comment_delete" action="/answers/<%=answer.id %>/comments/<%=comment.id %>" method="POST">
+                        <input name="_method" type="hidden" value="delete" />
+                        <input type="submit" name="delete" value="Delete Comment">
+                      </form>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <% if user? %>
+            <form class="big_white_buttons" method="get" action="/answers/<%=answer.id%>/comments/new">
+              <input type="submit" name="edit" value="New Comment" >
+            </form>
+          <% end %>
+          <% if owner?(@question.author_id) %>
+            <form class="big_white_buttons" method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/best-answer">
+              <input type="submit" value="Set best answer!">
+            </form>
+          <% end %>
+        </div>
+      <% end %>
+    </ul>
+  <% if user? %>
+    <form class="big_white_buttons" method="get" action="/questions/<%=@question.id%>/answers/new">
+      <input type="submit" name="edit" value="New Answer" >
+    </form>
+  <% end %>
+</div>

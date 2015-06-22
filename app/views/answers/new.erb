@@ -1,0 +1,10 @@
+<div class="general_container">
+  <h1><%= @question.title %></h1>
+  <h2><%= @question.author.username %></h2>
+  <p class = "content"><%= @question.content %></p>
+  <br>
+  <form class="big_white_textarea" name="answer-creation" action="/questions/<%=@question.id %>/answers" method="post">
+    <textarea class="answer_textbox" name="answer" placeholder="Be nice..."></textarea>
+    <input type="submit" value="Post Answer">
+  </form>
+</div>

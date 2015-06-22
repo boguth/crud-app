@@ -1,0 +1,25 @@
+<div class="general_container">
+  <h1> Welcome to Fire'n Ice <%=@name%>! </h1>
+  <% if user? %>
+    <a href='/questions/new' id="newquestion">Create a new question!</a>
+  <% end %>
+
+  <% @questions.each do |question|%>
+    <article class = "question" id="Q<%= question.id %>">
+      <div class="votebox">
+        <%= erb :_vote, locals: { vote_type: 'upvote', route: "/questions/#{question.id}", question: question}  %>
+        <div class="score"><%= question.score %></div>
+        <%= erb :_vote, locals: { vote_type: 'downvote', route: "/questions/#{question.id}", question: question}  %>
+      </div>
+      <div class="details">
+        <h2><a href="/questions/<%= question.id %>" class="link"><%= question.title %></a></h2>
+        <span class="username">Asked by <%= question.author.username %></span>
+      </div>
+    </article>
+  <% end %>
+  <div id="error_div">
+    <% if @error %>
+      <p> Login please. </p>
+    <% end %>
+  </div>
+</div>

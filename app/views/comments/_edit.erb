@@ -1,0 +1,5 @@
+<form class="big_white_textarea big_white_buttons" action="/questions/<%=question.id%>/comments/<%=comment.id%>/edit" method="POST">
+  <input type="hidden" name="_method" value="put">
+  <textarea name="content"><%= comment.content %></textarea></br>
+  <input type="submit" value="Post!"></br>
+</form>

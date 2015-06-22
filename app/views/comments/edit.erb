@@ -1,0 +1,16 @@
+<div class="general_container">
+  <h1><%= @question.title %></h1>
+  <h2><%= @question.author.username %></h2>
+  <p class = "content"> <%= @question.content %> </p>
+  <% if @question.comments.length > 0 %>
+      <h3>Comments:</h3>
+      <ul>
+        <% @question.comments.each do |comment| %>
+          <li> <%= comment.content %> -- <%= comment.author.username %></li><br>
+        <% end %>
+      </ul>
+    <% end %>
+  <%= erb :'/comments/_edit', locals: { comment: @comment, question: @question } %>
+</div>
+
+
