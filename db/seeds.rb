@@ -1,11 +1,11 @@
 
-bob = User.create(name: "Bob")
-steve = User.create(name: "Steve")
-carl = User.create(name: "Carl")
-marc = User.create(name: "Marc")
-jane = User.create(name: "Jane")
-sarah = User.create(name: "Sarah")
-jenny = User.create(name: "Jenny")
+bob = User.create(name: "Bob", username: "bobcat", password: "test")
+steve = User.create(name: "Steve", username: "stevecat", password: "test")
+carl = User.create(name: "Carl", username: "carlcat", password: "test")
+marc = User.create(name: "Marc", username: "marccat", password: "test")
+jane = User.create(name: "Jane", username: "janecat", password: "test")
+sarah = User.create(name: "Sarah", username: "sarahcat", password: "test")
+jenny = User.create(name: "Jenny", username: "jennycat", password: "test")
 
 forkeys = Publisher.create(name: Faker::Company.name)
 calums = Publisher.create(name: Faker::Company.name)
