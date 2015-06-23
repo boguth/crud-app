@@ -1,6 +1,0 @@
-<form class="question-edit-partial big_white_textarea big_white_buttons" action="/questions/<%=question.id%>/edit" method="post">
-  <input type="hidden" name="_method" value="put">
-  <input type="text" value="<%= question.title %>" name="question[title]"></br>
-  <textarea name="question[content]"><%=question.content%></textarea></br>
-  <input type="submit" value="Post!">
-</form>

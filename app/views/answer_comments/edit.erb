@@ -1,9 +1,0 @@
-<h1><%= @question.title %></h1>
-<h2><%= @question.author.username %></h2>
-<p class = "content"> <%= @question.content %> </p>
-  <h3>Comments:</h3>
-    <li>
-      <%= @answer_comment.content %> -- <%= @answer_comment.author.username %>
-    </li></br>
-
-<%= erb :'/answer_comments/_edit', locals: { answer: @answer, comment: @answer_comment } %>
