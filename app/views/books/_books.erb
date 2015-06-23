@@ -1,0 +1,6 @@
+<li class="book"> <%=book.title %> <br /> Author: <%=book.author.name %> <br /> Publisher: <%=book.publisher.name %> </li>
+  <% if book.author.id == session[:user_id] %>
+  <p class="edit-link"><a href="/books/<%=book.author.id%>/edit">Edit Title</a></p>
+  <% end %>
+  <br />
+

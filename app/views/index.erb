@@ -1,8 +1,7 @@
 <div id="main">
   <h1> Books! </h1>
-  <ul><% @books.each do |book| %>
-    <li> <%=book.title %> <br /> Author: <%=book.author.name %> <br /> Publisher: <%=book.publisher.name %> </li>
-    <br />
-      <% end %>
+  <ul id="book-list"><% @books.each do |book| %>
+    <%= erb :"/books/_books", :locals => { :book => book } %>
+    <% end %>
   </ul>
 </div>

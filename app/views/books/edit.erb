@@ -1,0 +1,5 @@
+<form id="edit-form" method="POST" action="/books/<%=@book.id%>">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="text" name="title" placeholder="<%=@book.title%>">
+  <input type="submit" value="edit">
+</form>

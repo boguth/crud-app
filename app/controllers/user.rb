@@ -7,13 +7,25 @@ get '/sessions/new' do
 end
 
 post '/sessions' do
-  if User.authenticate(params[:username], params[:password])
-     @user = User.find_by(username: params[:username])
-     session[:user_id] = @user.id
-     redirect '/'
+  if request.xhr?
+    if User.authenticate(params[:username], params[:password])
+       @user = User.find_by(username: params[:username])
+       session[:user_id] = @user.id
+       erb :"_header", layout: false
+    else
+      @error = "Please enter a valid username and password."
+      content_type :json
+      @error.to_json
+    end
   else
-    @error = "Please enter a valid username and password."
-    erb :"/users/login"
+    if User.authenticate(params[:username], params[:password])
+       @user = User.find_by(username: params[:username])
+       session[:user_id] = @user.id
+       redirect '/'
+    else
+      @error = "Please enter a valid username and password."
+      erb :"/users/login"
+    end
   end
 end
 
